@@ -1,10 +1,12 @@
+import Header from "@/components/common/Header";
+import Hero from "@/components/common/Hero";
 import { Button } from "@/components/ui/button";
 
 const Home = () => {
   return (
     <div className="">
-      <h1>Email Template Builder</h1>
-      <Button>Generate</Button>
+      <Header />
+      <Hero />
     </div>
   );
 };
