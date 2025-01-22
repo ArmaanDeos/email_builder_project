@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import SignInButton from "./SignInButton";
 
 const Hero = () => {
   return (
     <div className="px-10 md:px-28 lg:px-44 xl:px-56 flex flex-col justify-center items-center mt-24">
       <h2 className="font-extrabold text-4xl text-center">
         Design Dynamic Emails with Ease ✨ | AI-Powered Drag-and-Drop
-        <span className="text-primary">Email Template🚀</span>
+        <span className="text-primary"> Email Template🚀</span>
       </h2>
       <p className="text-center mt-4">
         Transform the way you create email templates with our AI-powered email
@@ -15,7 +16,7 @@ const Hero = () => {
       </p>
       <div className="flex gap-5 mt-6">
         <Button variant="outline">Try Demo</Button>
-        <Button>Get Started</Button>
+        <SignInButton />
       </div>
 
       <Image
