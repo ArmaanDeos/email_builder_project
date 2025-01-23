@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { canvasContext } from "@/app/provider";
 
-const EditorHeader = () => {
+const EditorHeader = ({ viewHTMLCode }) => {
   const { canvasSize, setCanvasSize } = canvasContext();
   return (
     <div className="p-4 shadow-sm flex justify-between items-center">
@@ -34,7 +34,13 @@ const EditorHeader = () => {
       </div>
 
       <div className="flex gap-3">
-        <Button variant="outline" className="hover:text-primary ">
+        <Button
+          variant="outline"
+          className="hover:text-primary"
+          onClick={() => {
+            viewHTMLCode(true);
+          }}
+        >
           <CodeSquare /> View Code
         </Button>
         <Button variant="outline">
