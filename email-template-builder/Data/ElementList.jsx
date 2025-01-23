@@ -44,8 +44,9 @@ export default [
     type: "Text",
     label: "Text",
     textarea: "Sample Text",
+    content: "Sample Text",
     style: {
-      backgroundColor: "#fff",
+      backgroundColor: "",
       color: "#000000",
       padding: "10px",
       textAlign: "center",
@@ -62,7 +63,7 @@ export default [
     icon: Image,
     type: "Image",
     label: "Image",
-    imageUrl: "/image.png",
+    imageUrl: "/image.jpg",
     alt: "Image",
     url: "#",
     style: {
