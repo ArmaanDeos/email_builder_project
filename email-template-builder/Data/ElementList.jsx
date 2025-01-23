@@ -42,16 +42,17 @@ export default [
   {
     icon: TextSelectionIcon,
     type: "Text",
-    label: "Text",
-    textarea: "Sample Text",
-    content: "Sample Text",
+    label: "Textarea",
+    textarea: "Text Area Text",
     style: {
-      backgroundColor: "",
+      backgroundColor: "##fff",
       color: "#000000",
       padding: "10px",
       textAlign: "center",
       fontSize: "22px",
+      borderRadius: "0px",
       fontWeight: "normal",
+      width: "100%",
       textTransform: "uppercase", //lowercase , capitilized
     },
     outerStyle: {
@@ -73,6 +74,7 @@ export default [
       width: "70%",
       margin: "0px",
       borderRadius: "0px",
+      margin: "0px",
     },
     outerStyle: {
       display: "flex",

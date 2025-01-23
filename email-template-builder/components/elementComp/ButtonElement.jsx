@@ -1,12 +1,10 @@
 import { Button } from "../ui/button";
 
-const ButtonElement = ({ style, content, url }) => {
+const ButtonElement = ({ style, content, url, outerStyle }) => {
   return (
-    <div className="">
-      <a href={url}>
-        <Button style={style}>{content}</Button>
-      </a>
-    </div>
+    <a href={url} style={outerStyle}>
+      <Button style={style}>{content}</Button>
+    </a>
   );
 };
 

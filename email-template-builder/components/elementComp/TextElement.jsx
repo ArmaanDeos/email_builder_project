@@ -1,7 +1,7 @@
-const TextElement = ({ style, content }) => {
+const TextElement = ({ style, content, textarea, outerStyle }) => {
   return (
-    <div className="">
-      <h2 style={style}>{content}</h2>
+    <div className="w-full">
+      <h2 style={style}>{textarea}</h2>
     </div>
   );
 };

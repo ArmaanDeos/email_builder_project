@@ -15,7 +15,7 @@ const Provider = ({ children }) => {
   const [dragElementLayout, setDragElementLayout] = useState(null);
 
   const [emailTemplate, setEmailTemplate] = useState([]);
-  const [selectedElement, setSelectedElement] = useState();
+  const [selectedElement, setSelectedElement] = useState([]);
 
   // check for user logged in or not
   useEffect(() => {
