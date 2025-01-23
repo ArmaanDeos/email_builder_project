@@ -1,5 +1,7 @@
 "use client";
 import { CanvasSize } from "@/context/CanvasSize";
+import { DragDropLayoutElement } from "@/context/DragDropLayoutElement";
+import { EmailTemplateContext } from "@/context/EmailTemplateContext";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
@@ -9,6 +11,9 @@ const Provider = ({ children }) => {
 
   const [userDetail, setUserDetail] = useState(null);
   const [canvasSize, setCanvasSize] = useState("desktop");
+  const [dragElementLayout, setDragElementLayout] = useState(null);
+
+  const [emailTemplate, setEmailTemplate] = useState([]);
 
   // check for user logged in or not
   useEffect(() => {
@@ -28,7 +33,15 @@ const Provider = ({ children }) => {
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
         <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
           <CanvasSize.Provider value={{ canvasSize, setCanvasSize }}>
-            <div>{children}</div>
+            <DragDropLayoutElement.Provider
+              value={{ dragElementLayout, setDragElementLayout }}
+            >
+              <EmailTemplateContext.Provider
+                value={{ emailTemplate, setEmailTemplate }}
+              >
+                {children}
+              </EmailTemplateContext.Provider>
+            </DragDropLayoutElement.Provider>
           </CanvasSize.Provider>
         </UserDetailContext.Provider>
       </GoogleOAuthProvider>
@@ -44,4 +57,12 @@ export const userContext = () => {
 
 export const canvasContext = () => {
   return useContext(CanvasSize);
+};
+
+export const dragElementContext = () => {
+  return useContext(DragDropLayoutElement);
+};
+
+export const emailTemplateContext = () => {
+  return useContext(EmailTemplateContext);
 };
