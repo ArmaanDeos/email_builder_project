@@ -7,51 +7,68 @@ import { UserDetailContext } from "@/context/UserDetailContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { useContext, useEffect, useState } from "react";
+
 const Provider = ({ children }) => {
   const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
   const [userDetail, setUserDetail] = useState(null);
   const [canvasSize, setCanvasSize] = useState("desktop");
   const [dragElementLayout, setDragElementLayout] = useState(null);
-
   const [emailTemplate, setEmailTemplate] = useState([]);
   const [selectedElement, setSelectedElement] = useState([]);
 
-  // check for user logged in or not
+  console.log("Provider", emailTemplate);
+
+  // Check for user logged in or not
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storage = JSON.parse(localStorage.getItem("userDetail"));
-      // get email template
-      const emailTemplateStorage = JSON.parse(
-        localStorage.getItem("emailTemplate")
-      );
-      setEmailTemplate(emailTemplateStorage);
+      try {
+        const storage = localStorage.getItem("userDetail");
+        // const emailTemplateStorage = localStorage.getItem("emailTemplate");
 
-      if (!storage?.email || !storage) {
-        // redirect to home page
-      } else {
-        setUserDetail(storage);
+        // Parse if data exists, otherwise fallback to default values
+        setUserDetail(storage ? JSON.parse(storage) : null);
+        // setEmailTemplate(
+        //   emailTemplateStorage ? JSON.parse(emailTemplateStorage) : []
+        // );
+
+        if (!storage || !JSON.parse(storage)?.email) {
+          // Handle redirection if needed (e.g., navigate to home)
+          console.warn("User not logged in.");
+        }
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+        setUserDetail(null);
+        setEmailTemplate([]);
       }
     }
   }, []);
 
-  // Save email template on local storage on change
+  // Save email template in local storage when it changes
   useEffect(() => {
-    if (typeof window !== "undefined")
-      localStorage.setItem("emailTemplate", JSON.stringify(emailTemplate));
-  }, [emailTemplate]);
+    if (typeof window !== "undefined") {
+      try {
+        const emailTemplateStorage = localStorage.getItem("emailTemplate");
+        const parsedTemplate = emailTemplateStorage
+          ? JSON.parse(emailTemplateStorage)
+          : [];
 
-  // Updating setting
+        // console.log("Parsed Email Template:", parsedTemplate); // Debug
+
+        setEmailTemplate(parsedTemplate);
+      } catch (error) {
+        console.error("Error parsing data from localStorage:", error);
+        setEmailTemplate([]);
+      }
+    }
+  }, []);
+
+  // Updating email template when selected element changes
   useEffect(() => {
-    if (selectedElement) {
-      let updatedEmailTemplate = [];
-      emailTemplate.forEach((item) => {
-        if (item.id === selectedElement?.layout?.id) {
-          updatedEmailTemplate.push(selectedElement?.layout);
-        } else {
-          updatedEmailTemplate.push(item);
-        }
-      });
+    if (selectedElement && emailTemplate.length > 0) {
+      const updatedEmailTemplate = emailTemplate?.map((item) =>
+        item.id === selectedElement?.layout?.id ? selectedElement?.layout : item
+      );
       setEmailTemplate(updatedEmailTemplate);
     }
   }, [selectedElement]);
@@ -70,7 +87,7 @@ const Provider = ({ children }) => {
                 <SelectedElementContext.Provider
                   value={{ selectedElement, setSelectedElement }}
                 >
-                  <div> {children}</div>
+                  <div>{children}</div>
                 </SelectedElementContext.Provider>
               </EmailTemplateContext.Provider>
             </DragDropLayoutElement.Provider>

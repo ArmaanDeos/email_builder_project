@@ -17,14 +17,17 @@ const Canvas = ({ viewHTMLCode, closeDialog }) => {
   const [dragOver, setDragOver] = useState(false);
   const [saveHTMLCode, setSaveHTMLCode] = useState();
 
+  console.log("Canvas", emailTemplate?.data);
+
   const onDragOver = (e) => {
     e.preventDefault();
     setDragOver(true);
-    // console.log("Over..");
+    console.log("Over..");
   };
 
   const onDropHandler = (e) => {
     setDragOver(false);
+    console.log(dragElementLayout?.dragLayout);
 
     if (dragElementLayout?.dragLayout) {
       setEmailTemplate((prev) => [...prev, dragElementLayout?.dragLayout]);

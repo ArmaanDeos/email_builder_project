@@ -8,10 +8,28 @@ import {
   SendIcon,
   Smartphone,
 } from "lucide-react";
-import { canvasContext } from "@/app/provider";
+import { canvasContext, emailTemplateContext } from "@/app/provider";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
 
 const EditorHeader = ({ viewHTMLCode }) => {
   const { canvasSize, setCanvasSize } = canvasContext();
+  const { templateId } = useParams();
+  const { emailTemplate, setEmailTemplate } = emailTemplateContext();
+
+  const updateEmailTemplate = useMutation(
+    api.emailTemplates.UpdateTemplateDesign
+  );
+
+  const onSaveTemplate = async () => {
+    await updateEmailTemplate({
+      tid: templateId,
+      design: emailTemplate,
+    });
+    toast("Template Saved Successfully");
+  };
   return (
     <div className="p-4 shadow-sm flex justify-between items-center">
       <Image src={"/logo.svg"} alt="logo" width={180} height={140} />
@@ -46,7 +64,7 @@ const EditorHeader = ({ viewHTMLCode }) => {
         <Button variant="outline">
           <SendIcon /> Send Test Email
         </Button>
-        <Button>
+        <Button onClick={onSaveTemplate}>
           <SaveIcon /> Save Template
         </Button>
       </div>
