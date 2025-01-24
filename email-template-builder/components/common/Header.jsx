@@ -10,7 +10,9 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center p-4 px-10 shadow-sm">
-      <Image src={"/logo.svg"} alt="logo" width={180} height={140} />
+      <Link href={"/"}>
+        <Image src={"/logo.svg"} alt="logo" width={180} height={140} />
+      </Link>
       <div className="">
         {userDetail?.email ? (
           <div className="flex items-center gap-3">
