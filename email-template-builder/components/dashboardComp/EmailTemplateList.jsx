@@ -6,10 +6,13 @@ import { useConvex } from "convex/react";
 import { userContext } from "@/app/provider";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const EmailTemplateList = () => {
   const [emailList, setEmailList] = useState([]);
 
+  const { templateId } = useParams();
+  console.log("TempId", templateId);
   const convex = useConvex();
   const { userDetail, setUserDetail } = userContext();
 
@@ -21,7 +24,7 @@ const EmailTemplateList = () => {
     const result = await convex.query(api.emailTemplates.GetAllUserTemplates, {
       email: userDetail?.email,
     });
-    console.log(result);
+    console.log("List", result?.id);
     setEmailList(result);
   };
 
@@ -57,7 +60,7 @@ const EmailTemplateList = () => {
                 <h2>{email?.description}</h2>
               </div>
 
-              <Link href={`/editor/${email._id}`}>
+              <Link href={`/editor/${email.tid}`}>
                 <Button className="w-full mt-2">ViewEdit</Button>
               </Link>
             </div>

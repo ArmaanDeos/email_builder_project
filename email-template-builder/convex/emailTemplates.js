@@ -41,14 +41,17 @@ export const GetTemplateDesign = queryGeneric({
         )
         .collect();
 
+      console.log("GetTemplateDesign", result);
+
       if (result.length === 0) {
         throw new Error("Template not found");
       }
 
-      return result[0]; // Ensure we have data to return
+      return result[0];
     } catch (error) {
       console.error("Error fetching template design:", error);
-      throw new Error("Failed to get template design");
+      // throw new Error("Failed to get template design");
+      return null;
     }
   },
 });
@@ -56,7 +59,7 @@ export const GetTemplateDesign = queryGeneric({
 export const UpdateTemplateDesign = mutationGeneric({
   args: {
     tid: v.string(),
-    design: v.optional(v.any()), // Mark `design` as optional to handle cases where it's missing
+    design: v.any(),
   },
   handler: async (ctx, args) => {
     if (!args.design) {
